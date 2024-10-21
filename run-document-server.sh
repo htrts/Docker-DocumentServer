@@ -642,6 +642,10 @@ update_release_date(){
   echo ${RELEASE_DATE} > ${DS_RELEASE_DATE}
 }
 
+update_expire_update_version_status(){
+  ${JSON} -I -e "this.services.CoAuthoring.expire = { updateVersionStatus: '10s'}"
+}
+
 # create base folders
 for i in converter docservice metrics; do
   mkdir -p "${DS_LOG_DIR}/$i"
@@ -756,6 +760,8 @@ if [ ${ONLYOFFICE_DATA_CONTAINER} != "true" ]; then
   fi
 
   update_nginx_settings
+
+  update_expire_update_version_status
   
   service supervisor start
   
